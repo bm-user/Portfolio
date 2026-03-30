@@ -140,7 +140,7 @@
 
         <section class="section section--contact" id="contact" aria-labelledby="contact-heading">
           <h2 id="contact-heading" class="section-heading">Get in touch</h2>
-          <form class="contact-form" action="#" method="post" novalidate>
+          <form class="contact-form" action="#" method="post">
             <div class="form-field">
               <label class="form-label" for="contact-name">Name</label>
               <input
@@ -166,7 +166,7 @@
             <div class="form-field">
               <label class="form-label" for="contact-subject">Subject</label>
               <select class="form-select" id="contact-subject" name="subject" required>
-                <option value="" disabled selected>Select a topic</option>
+                <option value="" disabled selected hidden>Select a topic</option>
                 <option value="project">New project</option>
                 <option value="collaboration">Collaboration</option>
                 <option value="general">General inquiry</option>
