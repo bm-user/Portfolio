@@ -77,65 +77,18 @@
       <div class="main-content">
         <section class="section section--projects" id="work" aria-labelledby="projects-heading">
           <h2 id="projects-heading" class="section-heading">Projects</h2>
-          <div class="project-grid">
-            <article class="project-card">
-              <div class="project-card_media">
-                <img
-                  class="project-card_image"
-                  src="https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&q=80"
-                  width="800"
-                  height="500"
-                  alt="Abstract network and security visualization"
-                />
-                <span class="project-card_badge">C++</span>
-              </div>
-              <div class="project-card_body">
-                <h3 class="project-card_title">VPN drop detection</h3>
-                <p class="project-card_description">
-                  A C++ project focused on detecting VPN connection changes in network behavior.
-                  Code and documentation live on GitHub.
-                </p>
-              </div>
-              <div class="project-card_actions">
-                <a
-                  class="project-card_button"
-                  href="https://github.com/bm-user/VPN_drop_detection"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >View on GitHub</a
-                >
-              </div>
-            </article>
-            <article class="project-card">
-              <div class="project-card_media">
-                <img
-                  class="project-card_image"
-                  src="https://raw.githubusercontent.com/bm-user/Rock_Paper_Scissors/main/Images/GameUi.jpg"
-                  width="800"
-                  height="500"
-                  alt="Rock Paper Scissors game UI from the project repository"
-                  loading="lazy"
-                />
-                <span class="project-card_badge">JavaScript</span>
-              </div>
-              <div class="project-card_body">
-                <h3 class="project-card_title">Rock Paper Scissors</h3>
-                <p class="project-card_description">
-                  A JavaScript implementation of the classic Rock Paper Scissors game. See the repository
-                  for source and setup.
-                </p>
-              </div>
-              <div class="project-card_actions">
-                <a
-                  class="project-card_button"
-                  href="https://github.com/bm-user/Rock_Paper_Scissors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >View on GitHub</a
-                >
-              </div>
-            </article>
+          <div class="project-search">
+            <label class="project-search_label" for="project-search">Search projects</label>
+            <input
+              type="search"
+              id="project-search"
+              class="project-search_input form-input"
+              placeholder="Filter by title, language, or keywords…"
+              autocomplete="off"
+              aria-controls="project-grid"
+            />
           </div>
+          <div id="project-grid" class="project-grid" aria-live="polite"></div>
         </section>
 
         <section class="section section--contact" id="contact" aria-labelledby="contact-heading">
@@ -189,5 +142,6 @@
         </section>
       </div>
     </main>
+    <script src="projects.js"></script>
   </body>
 </html>
