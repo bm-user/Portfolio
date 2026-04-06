@@ -33,3 +33,68 @@ const portfolioProjects = [
     linkLabel: "View on GitHub",
   },
 ];
+
+/**
+ * @param {HTMLElement} container — #project-grid mount point (hard-coded cards removed from HTML)
+ * @param {PortfolioProject[]} projects
+ */
+function renderProjectCards(container, projects) {
+  // Clear any existing content (e.g. hard-coded cards in HTML)
+  container.replaceChildren();
+
+  projects.forEach((project) => {
+    const article = document.createElement("article");
+    article.className = "project-card";
+
+    const media = document.createElement("div");
+    media.className = "project-card_media";
+
+    const img = document.createElement("img");
+    img.className = "project-card_image";
+    img.src = project.imageURL;
+    img.alt = project.imageAlt;
+    img.width = 800;
+    img.height = 500;
+    img.loading = "lazy";
+
+    const badge = document.createElement("span");
+    badge.className = "project-card_badge";
+    badge.textContent = project.category;
+
+    media.append(img, badge);
+
+    const body = document.createElement("div");
+    body.className = "project-card_body";
+
+    const titleEl = document.createElement("h3");
+    titleEl.className = "project-card_title";
+    titleEl.textContent = project.title;
+
+    const desc = document.createElement("p");
+    desc.className = "project-card_description";
+    desc.textContent = project.description;
+
+    body.append(titleEl, desc);
+
+    const actions = document.createElement("div");
+    actions.className = "project-card_actions";
+
+    const cta = document.createElement("a");
+    cta.className = "project-card_button";
+    cta.href = project.link;
+    cta.target = "_blank";
+    cta.rel = "noopener noreferrer";
+    cta.textContent = project.linkLabel;
+
+    actions.appendChild(cta);
+    article.append(media, body, actions);
+    container.appendChild(article);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("project-grid");
+  if (container) {
+    renderProjectCards(container, portfolioProjects);
+  }
+});
