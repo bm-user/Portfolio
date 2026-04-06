@@ -10,6 +10,35 @@
  * @property {string} linkLabel   — CTA button text
  */
 
+/** Escape text when building HTML strings (avoids broken markup and XSS if data ever comes from elsewhere). */
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/**
+ * @param {PortfolioProject[]} projects
+ * @param {string} query
+ * @returns {PortfolioProject[]}
+ */
+function filterProjectsByQuery(projects, query) {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) {
+    return projects;
+  }
+
+  return projects.filter((project) => {
+    const properties = [project.title, project.description, project.category, project.link]
+      .join(" ")
+      .toLowerCase();
+    return properties.includes(normalized);
+  });
+}
+
 const portfolioProjects = [
   {
     title: "VPN drop detection",
@@ -32,6 +61,36 @@ const portfolioProjects = [
     link: "https://github.com/bm-user/Rock_Paper_Scissors",
     linkLabel: "View on GitHub",
   },
+  {
+    title: "Coming Soon: More Projects",
+    description:
+      "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
+    category: "C++",
+    imageURL: "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
+    imageAlt: "Coming Soon: More Projects",
+    link: "https://github.com/bm-user/VPN_drop_detection",
+    linkLabel: "View on GitHub",
+  },
+  {
+    title: "Coming Soon: More Projects",
+    description:
+      "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
+    category: "C++",
+    imageURL: "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
+    imageAlt: "Coming Soon: More Projects",
+    link: "https://github.com/bm-user/VPN_drop_detection",
+    linkLabel: "View on GitHub",
+  },
+  {
+    title: "Coming Soon: More Projects",
+    description:
+      "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
+    category: "C++",
+    imageURL: "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
+    imageAlt: "Coming Soon: More Projects",
+    link: "https://github.com/bm-user/VPN_drop_detection",
+    linkLabel: "View on GitHub",
+  },
 ];
 
 /**
@@ -39,62 +98,63 @@ const portfolioProjects = [
  * @param {PortfolioProject[]} projects
  */
 function renderProjectCards(container, projects) {
-  // Clear any existing content (e.g. hard-coded cards in HTML)
-  container.replaceChildren();
+  if (projects.length === 0) {
+    container.innerHTML =
+      '<p class="project-grid_empty">No projects match your search. Try another keyword.</p>';
+    return;
+  }
+
+  let html = "";
 
   projects.forEach((project) => {
-    const article = document.createElement("article");
-    article.className = "project-card";
-
-    const media = document.createElement("div");
-    media.className = "project-card_media";
-
-    const img = document.createElement("img");
-    img.className = "project-card_image";
-    img.src = project.imageURL;
-    img.alt = project.imageAlt;
-    img.width = 800;
-    img.height = 500;
-    img.loading = "lazy";
-
-    const badge = document.createElement("span");
-    badge.className = "project-card_badge";
-    badge.textContent = project.category;
-
-    media.append(img, badge);
-
-    const body = document.createElement("div");
-    body.className = "project-card_body";
-
-    const titleEl = document.createElement("h3");
-    titleEl.className = "project-card_title";
-    titleEl.textContent = project.title;
-
-    const desc = document.createElement("p");
-    desc.className = "project-card_description";
-    desc.textContent = project.description;
-
-    body.append(titleEl, desc);
-
-    const actions = document.createElement("div");
-    actions.className = "project-card_actions";
-
-    const cta = document.createElement("a");
-    cta.className = "project-card_button";
-    cta.href = project.link;
-    cta.target = "_blank";
-    cta.rel = "noopener noreferrer";
-    cta.textContent = project.linkLabel;
-
-    actions.appendChild(cta);
-    article.append(media, body, actions);
-    container.appendChild(article);
+    html += `
+    <article class="project-card">
+      <div class="project-card_media">
+        <img
+          class="project-card_image"
+          src="${escapeHtml(project.imageURL)}"
+          width="800"
+          height="500"
+          alt="${escapeHtml(project.imageAlt)}"
+          loading="lazy"
+        />
+        <span class="project-card_badge">${escapeHtml(project.category)}</span>
+      </div>
+      <div class="project-card_body">
+        <h3 class="project-card_title">${escapeHtml(project.title)}</h3>
+        <p class="project-card_description">${escapeHtml(project.description)}</p>
+      </div>
+      <div class="project-card_actions">
+        <a
+          class="project-card_button"
+          href="${escapeHtml(project.link)}"
+          target="_blank"
+          rel="noopener noreferrer"
+          >${escapeHtml(project.linkLabel)}</a>
+      </div>
+    </article>`;
   });
+
+  container.innerHTML = html;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("project-grid");
-  if (container) {
-    renderProjectCards(container, portfolioProjects);
+  if (!container) {
+    return;
+  }
+
+  const searchInput = document.getElementById("project-search");
+
+  const applyFilter = () => {
+    const query = searchInput ? searchInput.value : "";
+    const matched = filterProjectsByQuery(portfolioProjects, query);
+    renderProjectCards(container, matched);
+  };
+
+  applyFilter();
+
+  if (searchInput) {
+    searchInput.addEventListener("input", applyFilter);
   }
 });

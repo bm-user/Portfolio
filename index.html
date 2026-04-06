@@ -77,6 +77,17 @@
       <div class="main-content">
         <section class="section section--projects" id="work" aria-labelledby="projects-heading">
           <h2 id="projects-heading" class="section-heading">Projects</h2>
+          <div class="project-search">
+            <label class="project-search_label" for="project-search">Search projects</label>
+            <input
+              type="search"
+              id="project-search"
+              class="project-search_input form-input"
+              placeholder="Filter by title, language, or keywords…"
+              autocomplete="off"
+              aria-controls="project-grid"
+            />
+          </div>
           <div id="project-grid" class="project-grid" aria-live="polite"></div>
         </section>
 

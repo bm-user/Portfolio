@@ -241,6 +241,33 @@ a {
   text-align: center;
 }
 
+.project-search {
+  max-width: 28rem;
+  margin: 0 auto 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.project-search_label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.project-search_input {
+  width: 100%;
+}
+
+.project-grid_empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
