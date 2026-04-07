@@ -39,62 +39,23 @@ function filterProjectsByQuery(projects, query) {
   });
 }
 
-const portfolioProjects = [
-  {
-    title: "VPN drop detection",
-    description:
-      "A C++ project focused on detecting VPN connection changes in network behavior. Code and documentation live on GitHub.",
-    category: "C++",
-    imageURL: "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&q=80",
-    imageAlt: "Abstract network and security visualization",
-    link: "https://github.com/bm-user/VPN_drop_detection",
-    linkLabel: "View on GitHub",
-  },
-  {
-    title: "Rock Paper Scissors",
-    description:
-      "A JavaScript implementation of the classic Rock Paper Scissors game. See the repository for source and setup.",
-    category: "JavaScript",
-    imageURL:
-      "https://raw.githubusercontent.com/bm-user/Rock_Paper_Scissors/main/Images/GameUi.jpg",
-    imageAlt: "Rock Paper Scissors game UI from the project repository",
-    link: "https://github.com/bm-user/Rock_Paper_Scissors",
-    linkLabel: "View on GitHub",
-  },
-  {
-    title: "Coming Soon: More Projects",
-    description:
-      "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
-    category: "C++",
-    imageURL: "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
-    imageAlt: "Coming Soon: More Projects",
-    link: "https://github.com/bm-user/VPN_drop_detection",
-    linkLabel: "View on GitHub",
-  },
-  {
-    title: "Coming Soon: More Projects",
-    description:
-      "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
-    category: "C++",
-    imageURL: "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
-    imageAlt: "Coming Soon: More Projects",
-    link: "https://github.com/bm-user/VPN_drop_detection",
-    linkLabel: "View on GitHub",
-  },
-  {
-    title: "Coming Soon: More Projects",
-    description:
-      "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
-    category: "C++",
-    imageURL: "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
-    imageAlt: "Coming Soon: More Projects",
-    link: "https://github.com/bm-user/VPN_drop_detection",
-    linkLabel: "View on GitHub",
-  },
-];
+/**
+ * Load project list from data.json (serve over http:// — fetch may fail with file://).
+ * @returns {Promise<PortfolioProject[]>}
+ */
+function loadProjects() {
+  return fetch("Data/data.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Could not load data.json (${response.status})`);
+      }
+      return response.json();
+    })
+    .then((data) => data.projects);
+}
 
 /**
- * @param {HTMLElement} container — #project-grid mount point (hard-coded cards removed from HTML)
+ * @param {HTMLElement} container — #project-grid mount point (cards injected by script)
  * @param {PortfolioProject[]} projects
  */
 function renderProjectCards(container, projects) {
@@ -144,17 +105,25 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const searchInput = document.getElementById("project-search");
+  loadProjects()
+    .then((portfolioProjects) => {
+      const searchInput = document.getElementById("project-search");
 
-  const applyFilter = () => {
-    const query = searchInput ? searchInput.value : "";
-    const matched = filterProjectsByQuery(portfolioProjects, query);
-    renderProjectCards(container, matched);
-  };
+      const applyFilter = () => {
+        const query = searchInput ? searchInput.value : "";
+        const matched = filterProjectsByQuery(portfolioProjects, query);
+        renderProjectCards(container, matched);
+      };
 
-  applyFilter();
+      applyFilter();
 
-  if (searchInput) {
-    searchInput.addEventListener("input", applyFilter);
-  }
+      if (searchInput) {
+        searchInput.addEventListener("input", applyFilter);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      container.innerHTML =
+        '<p class="project-grid_empty">Could not load projects. Use a local server (e.g. Live Server) so data.json can be fetched.</p>';
+    });
 });

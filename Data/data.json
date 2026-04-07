@@ -1,0 +1,58 @@
+{
+  "projects": [
+    {
+      "title": "VPN drop detection",
+      "description": "A C++ project focused on detecting VPN connection changes in network behavior. Code and documentation live on GitHub.",
+      "category": "C++",
+      "imageURL": "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&q=80",
+      "imageAlt": "Abstract network and security visualization",
+      "link": "https://github.com/bm-user/VPN_drop_detection",
+      "linkLabel": "View on GitHub"
+    },
+    {
+      "title": "Rock Paper Scissors",
+      "description": "A JavaScript implementation of the classic Rock Paper Scissors game. See the repository for source and setup.",
+      "category": "JavaScript",
+      "imageURL": "https://raw.githubusercontent.com/bm-user/Rock_Paper_Scissors/main/Images/GameUi.jpg",
+      "imageAlt": "Rock Paper Scissors game UI from the project repository",
+      "link": "https://github.com/bm-user/Rock_Paper_Scissors",
+      "linkLabel": "View on GitHub"
+    },
+    {
+      "title": "Coming Soon: More Projects",
+      "description": "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
+      "category": "C++",
+      "imageURL": "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
+      "imageAlt": "Coming Soon: More Projects",
+      "link": "https://github.com/bm-user/VPN_drop_detection",
+      "linkLabel": "View on GitHub"
+    },
+    {
+      "title": "Coming Soon: More Projects",
+      "description": "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
+      "category": "C++",
+      "imageURL": "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
+      "imageAlt": "Coming Soon: More Projects",
+      "link": "https://github.com/bm-user/VPN_drop_detection",
+      "linkLabel": "View on GitHub"
+    },
+    {
+      "title": "Coming Soon: More Projects",
+      "description": "Coming Soon: I'm actively working on new projects to add here. Check back soon for updates!",
+      "category": "C++",
+      "imageURL": "https://media.istockphoto.com/id/1144477744/vector/coming-soon-text-on-abstract-sunrise-dark-background-with-motion-effect.jpg?s=2048x2048&w=is&k=20&c=5lUrhxwZF5NJwOAqTjYChCLeU9722uaOJs3NX9WX4qE=",
+      "imageAlt": "Coming Soon: More Projects",
+      "link": "https://github.com/bm-user/VPN_drop_detection",
+      "linkLabel": "View on GitHub"
+    },
+    {
+      "title": "VPN drop detection",
+      "description": "A C++ project focused on detecting VPN connection changes in network behavior. Code and documentation live on GitHub.",
+      "category": "C++",
+      "imageURL": "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&q=80",
+      "imageAlt": "Abstract network and security visualization",
+      "link": "https://github.com/bm-user/VPN_drop_detection",
+      "linkLabel": "View on GitHub"
+    }
+  ]
+}
