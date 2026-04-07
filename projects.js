@@ -43,8 +43,12 @@ function filterProjectsByQuery(projects, query) {
  * Load project list from data.json (serve over http:// — fetch may fail with file://).
  * @returns {Promise<PortfolioProject[]>}
  */
-function loadProjects() {
-  return fetch("Data/data.json")
+// Use raw.githubusercontent.com for JSON — /blob/ URLs return HTML, not JSON.
+const PROJECT_DATA_URL =
+  "https://raw.githubusercontent.com/bm-user/Portfolio/feature/json-writer/Data/data.json";
+
+async function loadProjects() {
+  return fetch(PROJECT_DATA_URL)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Could not load data.json (${response.status})`);
