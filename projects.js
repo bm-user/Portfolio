@@ -48,14 +48,12 @@ const PROJECT_DATA_URL =
   "https://raw.githubusercontent.com/bm-user/Portfolio/feature/json-writer/Data/data.json";
 
 async function loadProjects() {
-  return fetch(PROJECT_DATA_URL)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Could not load data.json (${response.status})`);
-      }
-      return response.json();
-    })
-    .then((data) => data.projects);
+  const response = await fetch(PROJECT_DATA_URL);
+  if (!response.ok) {
+    throw new Error(`Could not load data.json (${response.status})`);
+  }
+  const data = await response.json();
+  return data.projects;
 }
 
 /**
@@ -103,31 +101,33 @@ function renderProjectCards(container, projects) {
   container.innerHTML = html;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("project-grid");
   if (!container) {
     return;
   }
 
-  loadProjects()
-    .then((portfolioProjects) => {
-      const searchInput = document.getElementById("project-search");
+  let portfolioProjects;
+  try {
+    portfolioProjects = await loadProjects();
+  } catch (err) {
+    console.error(err);
+    container.innerHTML =
+      '<p class="project-grid_empty">Could not load projects. Use a local server (e.g. Live Server) so data.json can be fetched.</p>';
+    return;
+  }
 
-      const applyFilter = () => {
-        const query = searchInput ? searchInput.value : "";
-        const matched = filterProjectsByQuery(portfolioProjects, query);
-        renderProjectCards(container, matched);
-      };
+  const searchInput = document.getElementById("project-search");
 
-      applyFilter();
+  const applyFilter = () => {
+    const query = searchInput ? searchInput.value : "";
+    const matched = filterProjectsByQuery(portfolioProjects, query);
+    renderProjectCards(container, matched);
+  };
 
-      if (searchInput) {
-        searchInput.addEventListener("input", applyFilter);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      container.innerHTML =
-        '<p class="project-grid_empty">Could not load projects. Use a local server (e.g. Live Server) so data.json can be fetched.</p>';
-    });
+  applyFilter();
+
+  if (searchInput) {
+    searchInput.addEventListener("input", applyFilter);
+  }
 });
